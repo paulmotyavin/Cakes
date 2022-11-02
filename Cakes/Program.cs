@@ -1,38 +1,20 @@
-﻿/*using System.ComponentModel;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Xml.Linq;
-using Cakes;
-
-namespace Cakes
+﻿namespace Cakes
 {
     internal class Program
     {
+        static public string zakaz;
+        static public int price;
+        static public int position = 2;
+        static public int position1 = 2;
+        public static DateTime day = new();
         static void Main()
         {
-            int position = 1;
-            int position1 = 2;
-            Program constructor = new();
-            ConsoleKeyInfo key = Console.ReadKey();
             while (true)
             {
-                if (position == 2 || key.Key == ConsoleKey.DownArrow)
-                {
-                    position++;
-                }
-                if (position == 9 || key.Key == ConsoleKey.UpArrow)
-                {
-                    position--;
-                }
-                int pprice = 0;
-                int price = 0;
-                pprice += price;
                 List<Parametr> Names = new();
                 List<Parametr> Descriptions = new();
-                List<string> Zakaz = new();
                 Parametr name1 = new();
                 Parametr value1 = new();
-                name1.number = 2;
                 name1.Name = "   Форма торта";
                 value1.Name1 = "   Круг";
                 value1.price1 = 400;
@@ -47,7 +29,6 @@ namespace Cakes
 
                 Parametr name2 = new();
                 Parametr value2 = new();
-                name2.number = 3;
                 name2.Name = "   Размер торта";
                 value2.Name1 = "   Маленький ( Диаметр - 16 см, 8 порций)";
                 value2.price1 = 900;
@@ -62,7 +43,6 @@ namespace Cakes
 
                 Parametr name3 = new();
                 Parametr value3 = new();
-                name3.number = 4;
                 name3.Name = "   Вкус коржей";
                 value3.Name1 = "   Ванильный";
                 value3.price1 = 150;
@@ -77,7 +57,6 @@ namespace Cakes
 
                 Parametr name4 = new();
                 Parametr value4 = new();
-                name4.number = 5;
                 name4.Name = "   Количество коржей";
                 value4.Name1 = "   1 корж";
                 value4.price1 = 150;
@@ -94,7 +73,6 @@ namespace Cakes
 
                 Parametr name5 = new();
                 Parametr value5 = new();
-                name5.number = 6;
                 name5.Name = "   Глазурь";
                 value5.Name1 = "   Шоколад";
                 value5.price1 = 100;
@@ -109,7 +87,6 @@ namespace Cakes
 
                 Parametr name6 = new();
                 Parametr value6 = new();
-                name6.number = 7;
                 name6.Name = "   Декор";
                 value6.Name1 = "   Шоколадная";
                 value6.price1 = 100;
@@ -132,14 +109,19 @@ namespace Cakes
                 {
                     Console.WriteLine(pos.Name);
                 }
-                Console.WriteLine("\n Цена: " + pprice);
-                Console.Write("Цена: ");
-                foreach (string pos in Zakaz)
-                    Console.Write(pos + "; ");
+                Console.WriteLine("\n\nВаш заказ: " + zakaz);
+                Console.WriteLine("\nЦена: " + price);
                 Console.SetCursorPosition(0, position);
                 Console.WriteLine("->");
-                key = Console.ReadKey();
-
+                ConsoleKeyInfo key = Console.ReadKey();
+                if (position == 2 || key.Key == ConsoleKey.DownArrow)
+                {
+                    position++;
+                }
+                if (position == 9 || key.Key == ConsoleKey.UpArrow)
+                {
+                    position--;
+                }
                 if (key.Key == ConsoleKey.Enter)
                 {
                     if (position == 2)
@@ -147,65 +129,92 @@ namespace Cakes
                         Descriptions.Clear();
                         Descriptions.Add(value1);
                     }
-                    else if (position == 3)
+                    if (position == 3)
                     {
                         Descriptions.Clear();
                         Descriptions.Add(value2);
                     }
-                    else if (position == 4)
+                    if (position == 4)
                     {
                         Descriptions.Clear();
                         Descriptions.Add(value3);
                     }
-                    else if (position == 5)
+                    if (position == 5)
                     {
                         Descriptions.Clear();
                         Descriptions.Add(value4);
                     }
-                    else if (position == 6)
+                    if (position == 6)
                     {
                         Descriptions.Clear();
                         Descriptions.Add(value5);
                     }
-                    else if (position == 7)
+                    if (position == 7)
                     {
                         Descriptions.Clear();
                         Descriptions.Add(value6);
                     }
-                    while (key.Key != ConsoleKey.Escape)
+                    if (key.Key == ConsoleKey.Enter)
                     {
-                        if (position1 == 6 || key.Key == ConsoleKey.UpArrow)
+                        while (key.Key != ConsoleKey.Escape)
                         {
-                            position1--;
+                            if (position1 == 6 || key.Key == ConsoleKey.UpArrow)
+                            {
+                                position1--;
+                            }
+                            if (position1 == 2 || key.Key == ConsoleKey.DownArrow)
+                            {
+                                position1++;
+                            }
+                            Console.Clear();
+                            Console.WriteLine("Для выхода нажмите Escape");
+                            Console.WriteLine("Выберите пункт из меню: ");
+                            Console.WriteLine("--------------------------");
+                            foreach (Parametr item in Descriptions)
+                            {
+                                Console.WriteLine(item.Name1 + " - " + item.price1);
+                                Console.WriteLine(item.Name2 + " - " + item.price2);
+                                Console.WriteLine(item.Name3 + " - " + item.price3);
+                                Console.WriteLine(item.Name4 + " - " + item.price4);
+                            }
+                            Console.SetCursorPosition(0, position1);
+                            Console.WriteLine("->");
+                            if (position == 8)
+                            {
+                                Console.Clear();
+                                Console.WriteLine("Спасибо за заказ!");
+                                 day = DateTime.Now;
+                                File.AppendAllText("C:/Users/paulscriptum/Desktop/заказ.txt", "Заказ от " + day + "\n\t" + "Заказ: " + zakaz + "\n\t" + "Цена: " + price + "\n");
+                            }
+                            key = Console.ReadKey();
+                            if (key.Key == ConsoleKey.Enter)
+                            {
+                                foreach (Parametr item in Descriptions)
+                                {
+                                    if (position1 == 3)
+                                    {
+                                        price += item.price1;
+                                        zakaz = zakaz + item.Name1 + " - " + item.price1 + "; ";
+                                    }
+                                    if (position1 == 4)
+                                    {
+                                        price += item.price2;
+                                        zakaz = zakaz + item.Name2 + " - " + item.price2 + "; ";
+                                    }
+                                    if (position1 == 5)
+                                    {
+                                        price += item.price3;
+                                        zakaz = zakaz + item.Name3 + " - " + item.price3 + "; ";
+                                    }
+                                    if (position1 == 6)
+                                    {
+                                        price += item.price4;
+                                        zakaz = zakaz + item.Name4 + " - " + item.price4 + "; ";
+                                    }
+                                }
+                                break;
+                            }
                         }
-                        if (position1 == 2 || key.Key == ConsoleKey.DownArrow)
-                        {
-                            position1++;
-                        }
-                        Console.Clear();
-                        Console.WriteLine("Для выхода нажмите Escape");
-                        Console.WriteLine("Выберите пункт из меню: ");
-                        Console.WriteLine("--------------------------");
-                        foreach (Parametr item in Descriptions)
-                        {
-                            Console.WriteLine(item.Name1 + " - " + item.price1);
-                            Console.WriteLine(item.Name2 + " - " + item.price2);
-                            Console.WriteLine(item.Name3 + " - " + item.price3);
-                            Console.WriteLine(item.Name4 + " - " + item.price4);
-                            
-                        }
-                        *//*if (position1 == 2 && key.Key == ConsoleKey.Enter)
-                        {
-                            Parametr Teb = Descriptions[1].ToString();
-                            Zakaz.Add(Teb);
-                        }*//*
-                        Console.SetCursorPosition(0, position1);
-                        Console.WriteLine("->");
-                        key = Console.ReadKey();
-                        if (key.Key == ConsoleKey.Enter && position1 == 2) Console.WriteLine("beb");
-                        if (key.Key == ConsoleKey.Enter && position1 == 3) Console.WriteLine("beb");
-                        if (key.Key == ConsoleKey.Enter && position1 == 4) Console.WriteLine("beb");
-                        if (key.Key == ConsoleKey.Enter && position1 == 5) Console.WriteLine("beb");
                     }
                 }
             }
@@ -213,7 +222,8 @@ namespace Cakes
     }
 }
 
-*//*List<Parametr> sortedlist = Descriptions.Where(item => item.number == position).ToList<Parametr>();*/
+
+/*List<Parametr> sortedlist = Descriptions.Where(item => item.number == position).ToList<Parametr>();*/
 
 
 /*while (true)
@@ -222,7 +232,7 @@ namespace Cakes
     foreach (string pos in name)
         Console.Write(pos + "; ");
     name.Add(Console.ReadLine());
-}*/
+}*//*
 
 using Cakes;
 using System;
@@ -428,5 +438,5 @@ namespace Cakes
 
 
 
-/*List<Parametr> sortedlist = Descriptions.Where(item => item.number == position).ToList<Parametr>();*/
+*//*List<Parametr> sortedlist = Descriptions.Where(item => item.number == position).ToList<Parametr>();*/
 
